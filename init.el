@@ -41,23 +41,35 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
+     spacemacs-editing
      git
+     github
      markdown
+     pdf-tools
      org
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+     windows-scripts
      spell-checking
      syntax-checking
      version-control
+     c-c++
+     ycmd
+     cscope
+     python
+     ipython-notebook
+     extra-langs
+     java
+     colors
+     games
+     themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
-                                      youdao-dictionary
-                                      )
+   dotspacemacs-additional-packages '(youdao-dictionary)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -339,6 +351,8 @@ you should place your code here."
   ;;change powerline style
   (setq ns-use-srgb-colorspace nil)
   (setq powerline-default-separator 'arrow)
+  ;;youdao search key bindings
+  (spacemacs/set-leader-keys "yd" 'youdao-dictionary-search-at-point+)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
