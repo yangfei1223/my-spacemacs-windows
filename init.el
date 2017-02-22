@@ -447,15 +447,54 @@ values."
                             (projectile-switch-project-by-name project)
                             (setq default-directory old-default-directory))))))
 
-
+  
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;
+  ;;  设置emacs-w3m浏览器
+  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  
   ;;w3m配置项（用于上网）
-  (add-to-list 'load-path "C:/Users/yangf/.emacs.d/w3m-lisp") ;;w3m所需要的lisp文件，所在路径
   (add-to-list 'exec-path "C:/Emacs/bin/w3m") ;;指定w3m可执行程序，所在的执行路径
-  (require 'w3m-load)
-  (setq w3m-use-favicon nil)
-  (setq w3m-command-arguments '("-cookie" "-F"))
-  (setq w3m-use-cookies t)
+
+  (autoload 'w3m "w3m" "interface for w3m on emacs" t)
+
+  ;; 设置w3m主页
   (setq w3m-home-page "http://www.baidu.com")
+
+  ;; 默认显示图片
+  (setq w3m-default-display-inline-images t)
+  (setq w3m-default-toggle-inline-images t)
+
+  ;; 使用cookies
+  (setq w3m-use-cookies t)
+
+  ;;设定w3m运行的参数，分别为使用cookie和使用框架
+  (setq w3m-command-arguments '("-cookie" "-F"))
+
+  ;; 使用w3m作为默认浏览器
+  (setq browse-url-browser-function 'w3m-browse-url)
+  (setq w3m-view-this-url-new-session-in-background t)
+
+
+  ;;显示图标
+  (setq w3m-show-graphic-icons-in-header-line t)
+  (setq w3m-show-graphic-icons-in-mode-line t)
+
+  ;;C-c C-p 打开，这个好用
+  (setq w3m-view-this-url-new-session-in-background t)
+
+
+  (add-hook 'w3m-fontify-after-hook 'remove-w3m-output-garbages)                                    
+  (defun remove-w3m-output-garbages ()
+    "去掉w3m输出的垃圾."
+    (interactive)
+    (let ((buffer-read-only))
+      (setf (point) (point-min))
+      (while (re-search-forward "[\200-\240]" nil t)
+        (replace-match " "))
+      (set-buffer-multibyte t))
+(set-buffer-modified-p nil))
 
   )
 
